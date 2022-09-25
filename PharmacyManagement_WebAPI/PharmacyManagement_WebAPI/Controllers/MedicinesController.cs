@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_WebAPI.Models;
 using PharmacyManagement_WebAPI.Repository;
+using PharmacyManagement_WebAPI.Services;
 
 namespace PharmacyManagement_WebAPI.Controllers
 {
@@ -9,35 +10,35 @@ namespace PharmacyManagement_WebAPI.Controllers
     [ApiController]
     public class MedicinesController : ControllerBase
     {
-        private readonly IMedicineRepository _medicineRepository;
-        public MedicinesController(IMedicineRepository medicineRepository)
+        public readonly MedicineServices _medicineServices;
+        public MedicinesController(MedicineServices medicineServices)
         {
-            _medicineRepository = medicineRepository;
+            _medicineServices = medicineServices;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllMedicines()
         {
-            var medicines = await _medicineRepository.GetAllMedicines();
+            var medicines = await _medicineServices.GetAllMedicines();
             return Ok(medicines);
         }
         [HttpGet("{MedName}")]
         public async Task<IActionResult> GetMedicine([FromRoute] string MedName)
         {
-            var medcine = await _medicineRepository.GetMedicineByName(MedName);
+            var medcine = await _medicineServices.GetMedicineByName(MedName);
             return Ok(medcine);
         }
 
         [HttpPost("")]
         public async Task<IActionResult> AddMedicine([FromBody] Medicine medicine)
         {
-            var id = await _medicineRepository.AddMedicine(medicine);
+            var id = await _medicineServices.AddMedicine(medicine);
             return CreatedAtAction(nameof(AddMedicine), id);
 
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMedicine([FromBody] Medicine medicine, [FromRoute] int id)
         {
-            await _medicineRepository.UpdateMedicine(id, medicine);
+            await _medicineServices.UpdateMedicine(id, medicine);
             return Ok();
 
         }
@@ -51,7 +52,7 @@ namespace PharmacyManagement_WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedicine([FromRoute] int id)
         {
-            await _medicineRepository.DeleteMedicine(id);
+            await _medicineServices.DeleteMedicine(id);
             return Ok();
         }
     }

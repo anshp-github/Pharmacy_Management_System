@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_WebAPI.Models;
 using PharmacyManagement_WebAPI.Repository;
+using PharmacyManagement_WebAPI.Services;
 
 namespace PharmacyManagement_WebAPI.Controllers
 {
@@ -9,35 +10,35 @@ namespace PharmacyManagement_WebAPI.Controllers
     [ApiController]
     public class SuppliersController : ControllerBase
     {
-        private readonly ISupplierRepository _supplierRepository;
-        public SuppliersController(ISupplierRepository supplierRepository)
+        public readonly SupplierServices _supplierServices;
+        public SuppliersController(SupplierServices supplierServices)
         {
-            _supplierRepository = supplierRepository;
+            _supplierServices = supplierServices;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllSuppliers()
         {
-            var suppliers = await _supplierRepository.GetAllSuppliers();
+            var suppliers = await _supplierServices.GetAllSuppliers();
             return Ok(suppliers);
         }
         [HttpPost("")]
         public async Task<IActionResult> AddSupplier([FromBody] Supplier supplier)
         {
-            var id = await _supplierRepository.AddSupplier(supplier);
+            var id = await _supplierServices.AddSupplier(supplier);
             return CreatedAtAction(nameof(AddSupplier), id);
 
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSupplier([FromBody] Supplier supplier, [FromRoute] int id)
         {
-            await _supplierRepository.UpdateSupplier(id, supplier);
+            await _supplierServices.UpdateSupplier(id, supplier);
             return Ok();
 
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSupplier([FromRoute] int id)
         {
-            await _supplierRepository.DeleteSupplier(id);
+            await _supplierServices.DeleteSupplier(id);
             return Ok();
         }
     }

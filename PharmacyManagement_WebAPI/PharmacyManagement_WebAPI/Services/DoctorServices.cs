@@ -4,66 +4,32 @@ using PharmacyManagement_WebAPI.Repository;
 
 namespace PharmacyManagement_WebAPI.Services
 {
-    public class DoctorServices:IDoctorRepository
+    public class DoctorServices
     {
-        private readonly PharmacyDbContext _context;
+         IDoctorRepository _doctor;
 
-        public DoctorServices(PharmacyDbContext context)
+        public DoctorServices(IDoctorRepository doctor)
         {
-            _context = context;
+            _doctor = doctor;
         }
         public async Task<List<Doctor>> GetAllDoctors()
         {
-            var records = await _context.Doctors.Select(x => new Doctor()
-            {
-                DoctorId = x.DoctorId,
-                DocName = x.DocName,
-                DocEmail = x.DocEmail,
-                DocPhnNum = x.DocPhnNum,
-                DocPassword = x.DocPassword,
-                DocAddress = x.DocAddress,
-
-            }).ToListAsync();
-            return records;
+          return await _doctor.GetAllDoctors();
         }
         public async Task<Doctor> GetDoctorByName(string DocName)
         {
-            var records = await _context.Doctors.Where(x => x.DocName == DocName).Select(x => new Doctor()
-            {
-                DoctorId = x.DoctorId,
-                DocName = x.DocName,
-                DocEmail = x.DocEmail,
-                DocPhnNum = x.DocPhnNum,
-                DocPassword = x.DocPassword,
-                DocAddress = x.DocAddress,
-
-            }).FirstOrDefaultAsync();
-            return records;
+            return await _doctor.GetDoctorByName(DocName);
 
         }
         public async Task<int> AddDoctor(Doctor doctor)
         {
-            var doc = new Doctor()
-            {
-                //DoctorId = doctor.DoctorId,
-                DocName = doctor.DocName,
-                DocEmail = doctor.DocEmail,
-                DocPhnNum = doctor.DocPhnNum,
-                DocPassword = doctor.DocPassword,
-                DocAddress = doctor.DocAddress,
-
-            };
-            _context.Doctors.AddAsync(doc);
-            await _context.SaveChangesAsync();
-            return doc.DoctorId;
+           return await _doctor.AddDoctor(doctor);
 
 
         }
         public async Task DeleteDoctor(int id)
         {
-            var doc = new Doctor() { DoctorId = id };
-            _context.Doctors.Remove(doc);
-            await _context.SaveChangesAsync();
+             await _doctor.DeleteDoctor(id);
         }
     }
 }

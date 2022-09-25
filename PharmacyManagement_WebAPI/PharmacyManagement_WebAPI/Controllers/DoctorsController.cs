@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_WebAPI.Models;
 using PharmacyManagement_WebAPI.Repository;
+using PharmacyManagement_WebAPI.Services;
 
 namespace PharmacyManagement_WebAPI.Controllers
 {
@@ -9,34 +10,34 @@ namespace PharmacyManagement_WebAPI.Controllers
     [ApiController]
     public class DoctorsController : ControllerBase
     {
-        private readonly IDoctorRepository _doctorRepository;
-        public DoctorsController(IDoctorRepository doctorRepository)
+        public readonly DoctorServices _doctorServices;
+        public DoctorsController(DoctorServices doctorServices)
         {
-            _doctorRepository = doctorRepository;
+            _doctorServices = doctorServices;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllDoctors()
         {
-            var doctors = await _doctorRepository.GetAllDoctors();
+            var doctors = await _doctorServices.GetAllDoctors();
             return Ok(doctors);
         }
         [HttpGet("{DocName}")]
         public async Task<IActionResult> GetDoctor([FromRoute] string DocName)
         {
-            var doctor = await _doctorRepository.GetDoctorByName(DocName);
+            var doctor = await _doctorServices.GetDoctorByName(DocName);
             return Ok(doctor);
         }
         [HttpPost("")]
         public async Task<IActionResult> AddDoctor([FromBody] Doctor doctor)
         {
-            var id = await _doctorRepository.AddDoctor(doctor);
+            var id = await _doctorServices.AddDoctor(doctor);
             return CreatedAtAction(nameof(AddDoctor), id);
 
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDoctor([FromRoute] int id)
         {
-            await _doctorRepository.DeleteDoctor(id);
+            await _doctorServices.DeleteDoctor(id);
             return Ok();
         }
     }

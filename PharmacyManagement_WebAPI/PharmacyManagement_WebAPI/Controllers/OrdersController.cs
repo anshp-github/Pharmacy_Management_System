@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_WebAPI.Models;
 using PharmacyManagement_WebAPI.Repository;
+using PharmacyManagement_WebAPI.Services;
 
 namespace PharmacyManagement_WebAPI.Controllers
 {
@@ -9,23 +10,23 @@ namespace PharmacyManagement_WebAPI.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IOrderRepository _orderRepository;
+        public readonly OrderServices _orderServices;
 
-        public OrdersController(IOrderRepository orderRepository)
+        public OrdersController(OrderServices orderServices)
         {
-            _orderRepository = orderRepository;
+            _orderServices = orderServices;
         }
 
         [HttpGet("")]
         public async Task<IActionResult> GetAllOrders()
         {
-            var orders = await _orderRepository.GetAllOrders();
+            var orders = await _orderServices.GetAllOrders();
             return Ok(orders);
         }
         [HttpPost("")]
         public async Task<IActionResult> AddOrder([FromBody] Order order)
         {
-            var id = await _orderRepository.AddOrder(order);
+            var id = await _orderServices.AddOrder(order);
             return CreatedAtAction(nameof(AddOrder), id);
         }
     }

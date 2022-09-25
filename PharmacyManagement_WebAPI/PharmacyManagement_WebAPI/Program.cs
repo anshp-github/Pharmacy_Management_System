@@ -15,10 +15,14 @@ builder.Services.AddDbContext<PharmacyDbContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IMedicineRepository, MedicineServices>();
-builder.Services.AddTransient<IDoctorRepository, DoctorServices>();
-builder.Services.AddTransient<IOrderRepository, OrderServices>();
-builder.Services.AddTransient<ISupplierRepository, SupplierServices>();
+builder.Services.AddScoped<IDoctorRepository, DoctorDAL>();
+builder.Services.AddScoped<DoctorServices, DoctorServices>();
+builder.Services.AddScoped<IMedicineRepository, MedicineDAL>();
+builder.Services.AddScoped<MedicineServices,MedicineServices>();
+builder.Services.AddScoped<IOrderRepository,OrderDAL>(); 
+builder.Services.AddScoped<OrderServices,OrderServices>();
+builder.Services.AddScoped<ISupplierRepository,SupplierDAL>();
+builder.Services.AddScoped<SupplierServices,SupplierServices>();
 
 var app = builder.Build();
 
