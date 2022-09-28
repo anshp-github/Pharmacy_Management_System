@@ -10,7 +10,7 @@ namespace PharmacyManagement_WebAPI.Models
 
         }
         public DbSet<Admin> Admins { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<DoctorRegistration> Doctors { get; set; }
         public DbSet<LoginDetails> LoginDetails { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Order> Orders { get; set; }

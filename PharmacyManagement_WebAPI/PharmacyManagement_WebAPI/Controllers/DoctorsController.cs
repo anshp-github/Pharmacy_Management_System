@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PharmacyManagement_WebAPI.Models;
 using PharmacyManagement_WebAPI.Repository;
@@ -8,6 +9,7 @@ namespace PharmacyManagement_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DoctorsController : ControllerBase
     {
         public readonly DoctorServices _doctorServices;
@@ -28,7 +30,7 @@ namespace PharmacyManagement_WebAPI.Controllers
             return Ok(doctor);
         }
         [HttpPost("")]
-        public async Task<IActionResult> AddDoctor([FromBody] Doctor doctor)
+        public async Task<IActionResult> AddDoctor([FromBody] DoctorRegistration doctor)
         {
             var id = await _doctorServices.AddDoctor(doctor);
             return CreatedAtAction(nameof(AddDoctor), id);

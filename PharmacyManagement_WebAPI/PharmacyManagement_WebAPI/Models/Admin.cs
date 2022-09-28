@@ -7,5 +7,7 @@
         public string AdminEmail { get; set; }
         public double AdminPhone { get; set; }
         public string AdminPassword { get; set; }
+        public string Role { get; set; }
     }
 }
+

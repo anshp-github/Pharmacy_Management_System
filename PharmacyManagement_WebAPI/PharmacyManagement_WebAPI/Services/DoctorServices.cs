@@ -12,16 +12,16 @@ namespace PharmacyManagement_WebAPI.Services
         {
             _doctor = doctor;
         }
-        public async Task<List<Doctor>> GetAllDoctors()
+        public async Task<List<DoctorRegistration>> GetAllDoctors()
         {
           return await _doctor.GetAllDoctors();
         }
-        public async Task<Doctor> GetDoctorByName(string DocName)
+        public async Task<DoctorRegistration> GetDoctorByName(string DocName)
         {
             return await _doctor.GetDoctorByName(DocName);
 
         }
-        public async Task<int> AddDoctor(Doctor doctor)
+        public async Task<int> AddDoctor(DoctorRegistration doctor)
         {
            return await _doctor.AddDoctor(doctor);
 

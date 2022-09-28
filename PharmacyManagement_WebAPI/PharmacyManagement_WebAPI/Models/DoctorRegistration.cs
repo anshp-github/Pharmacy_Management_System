@@ -2,8 +2,9 @@
 
 namespace PharmacyManagement_WebAPI.Models
 {
-    public class Doctor
+    public class DoctorRegistration
     {
+        [Key]
         public int DoctorId { get; set; }
         [Required(ErrorMessage = "Name is required!")]
         [Display(Name = "Name")]
@@ -22,5 +23,7 @@ namespace PharmacyManagement_WebAPI.Models
         [Required(ErrorMessage = "Address is required!")]
         [Display(Name = "Address")]
         public string DocAddress { get; set; }
+        public string Role { get; set; }
+
     }
 }

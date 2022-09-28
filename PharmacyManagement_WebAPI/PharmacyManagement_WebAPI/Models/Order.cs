@@ -19,7 +19,7 @@ namespace PharmacyManagement_WebAPI.Models
         public int MedicineId { get; set; }
 
         [ValidateNever]
-        public Doctor Doctor { get; set; }
+        public DoctorRegistration Doctor { get; set; }
         [ValidateNever]
         public Admin Admin { get; set; }
         [ValidateNever]

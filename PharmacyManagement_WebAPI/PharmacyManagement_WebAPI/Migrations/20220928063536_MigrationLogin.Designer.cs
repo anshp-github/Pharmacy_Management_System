@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmacyManagement_WebAPI.Models;
 
@@ -11,9 +12,10 @@ using PharmacyManagement_WebAPI.Models;
 namespace PharmacyManagement_WebAPI.Migrations
 {
     [DbContext(typeof(PharmacyDbContext))]
-    partial class PharmacyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220928063536_MigrationLogin")]
+    partial class MigrationLogin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

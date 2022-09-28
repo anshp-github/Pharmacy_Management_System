@@ -3,17 +3,17 @@ using PharmacyManagement_WebAPI.Models;
 
 namespace PharmacyManagement_WebAPI.Repository
 {
-    public class DoctorDAL:IDoctorRepository
+    public class DoctorRegistrationDAL:IDoctorRepository
     {
         private readonly PharmacyDbContext _context;
 
-        public DoctorDAL(PharmacyDbContext context)
+        public DoctorRegistrationDAL(PharmacyDbContext context)
         {
             _context = context;
         }
-        public async Task<List<Doctor>> GetAllDoctors()
+        public async Task<List<DoctorRegistration>> GetAllDoctors()
         {
-            var records = await _context.Doctors.Select(x => new Doctor()
+            var records = await _context.Doctors.Select(x => new DoctorRegistration()
             {
                 DoctorId = x.DoctorId,
                 DocName = x.DocName,
@@ -21,13 +21,14 @@ namespace PharmacyManagement_WebAPI.Repository
                 DocPhnNum = x.DocPhnNum,
                 DocPassword = x.DocPassword,
                 DocAddress = x.DocAddress,
+                Role=x.Role,
 
             }).ToListAsync();
             return records;
         }
-        public async Task<Doctor> GetDoctorByName(string DocName)
+        public async Task<DoctorRegistration> GetDoctorByName(string DocName)
         {
-            var records = await _context.Doctors.Where(x => x.DocName == DocName).Select(x => new Doctor()
+            var records = await _context.Doctors.Where(x => x.DocName == DocName).Select(x => new DoctorRegistration()
             {
                 DoctorId = x.DoctorId,
                 DocName = x.DocName,
@@ -35,14 +36,15 @@ namespace PharmacyManagement_WebAPI.Repository
                 DocPhnNum = x.DocPhnNum,
                 DocPassword = x.DocPassword,
                 DocAddress = x.DocAddress,
+                Role = x.Role,
 
             }).FirstOrDefaultAsync();
             return records;
 
         }
-        public async Task<int> AddDoctor(Doctor doctor)
+        public async Task<int> AddDoctor(DoctorRegistration doctor)
         {
-            var doc = new Doctor()
+            var doc = new DoctorRegistration()
             {
                 //DoctorId = doctor.DoctorId,
                 DocName = doctor.DocName,
@@ -50,6 +52,7 @@ namespace PharmacyManagement_WebAPI.Repository
                 DocPhnNum = doctor.DocPhnNum,
                 DocPassword = doctor.DocPassword,
                 DocAddress = doctor.DocAddress,
+                Role="Doctor",
 
             };
             _context.Doctors.AddAsync(doc);
@@ -60,7 +63,7 @@ namespace PharmacyManagement_WebAPI.Repository
         }
         public async Task DeleteDoctor(int id)
         {
-            var doc = new Doctor() { DoctorId = id };
+            var doc = new DoctorRegistration() { DoctorId = id };
             _context.Doctors.Remove(doc);
             await _context.SaveChangesAsync();
         }

@@ -12,7 +12,7 @@ namespace PharmacyManagement_WebAPI.Data
         public int DoctorId { get; set; }
         public int AdminId { get; set; }
         public int MedicineId { get; set; }
-        public Doctor Doctor { get; set; }
+        public DoctorRegistration Doctor { get; set; }
         public Admin Admin { get; set; }
         public Medicine Medicine { get; set; }
     }
