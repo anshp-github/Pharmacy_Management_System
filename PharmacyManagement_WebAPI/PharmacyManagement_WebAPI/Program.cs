@@ -12,6 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<PharmacyDbContext>(options =>
@@ -52,6 +61,7 @@ builder.Services.AddSwaggerGen(opt =>
         BearerFormat = "JWT",
         Scheme = "bearer"
     });
+   
 
     opt.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -82,6 +92,8 @@ builder.Services.AddScoped<SupplierServices,SupplierServices>();
 
 var app = builder.Build();
 
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -91,6 +103,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseRouting();
+app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();

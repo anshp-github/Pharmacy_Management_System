@@ -32,6 +32,28 @@ namespace PharmacyManagement_WebAPI.Repository
             return records;
 
         }
+        public async Task<List<Order>> GetOrdersReport(DateTime From,DateTime To)
+        {
+            
+            var records = await _context.Orders.Where(o => o.OrderDate > From && o.OrderDate < To)
+                .Select(o => new Order()
+            {
+                OrderDate = o.OrderDate,
+                OrderId = o.OrderId,
+                Amount = o.Amount,
+                Count = o.Count,
+                IsPickedUp = o.IsPickedUp,
+                Admin = o.Admin,
+                AdminId = o.AdminId,
+                Doctor = o.Doctor,
+                DoctorId = o.DoctorId,
+                Medicine = o.Medicine,
+                MedicineId = o.MedicineId,
+
+            }).ToListAsync();
+            return records;
+           
+        }
         public async Task<int> AddOrder(Order order)
         {
 

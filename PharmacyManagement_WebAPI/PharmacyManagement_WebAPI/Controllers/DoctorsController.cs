@@ -9,7 +9,7 @@ namespace PharmacyManagement_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   
     public class DoctorsController : ControllerBase
     {
         public readonly DoctorServices _doctorServices;

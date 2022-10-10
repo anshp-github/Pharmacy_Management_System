@@ -29,5 +29,11 @@ namespace PharmacyManagement_WebAPI.Controllers
             var id = await _orderServices.AddOrder(order);
             return CreatedAtAction(nameof(AddOrder), id);
         }
+        [HttpGet("{From}/{To}")]
+        public async Task<IActionResult> GetOrdersReport([FromRoute] DateTime From, DateTime To)
+        {
+            var orders= await _orderServices.GetOrdersReport(From, To);
+            return Ok(orders);
+        }
     }
 }

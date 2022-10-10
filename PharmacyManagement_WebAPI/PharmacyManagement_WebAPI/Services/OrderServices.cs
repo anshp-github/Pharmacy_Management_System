@@ -19,5 +19,9 @@ namespace PharmacyManagement_WebAPI.Services
         {
             return await _order.AddOrder(order);
         }
+        public async Task<List<Order>> GetOrdersReport(DateTime From, DateTime To)
+        {
+            return await _order.GetOrdersReport(From, To);
+        }
     }
 }
