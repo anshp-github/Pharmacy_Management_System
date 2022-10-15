@@ -26,9 +26,9 @@ namespace PharmacyManagement_WebAPI.Repository
             }).ToListAsync();
             return records;
         }
-        public async Task<DoctorRegistration> GetDoctorByName(string DocName)
+        public async Task<DoctorRegistration> GetDoctorByName(string DocEmail)
         {
-            var records = await _context.Doctors.Where(x => x.DocName == DocName).Select(x => new DoctorRegistration()
+            var records = await _context.Doctors.Where(x => x.DocEmail == DocEmail).Select(x => new DoctorRegistration()
             {
                 DoctorId = x.DoctorId,
                 DocName = x.DocName,

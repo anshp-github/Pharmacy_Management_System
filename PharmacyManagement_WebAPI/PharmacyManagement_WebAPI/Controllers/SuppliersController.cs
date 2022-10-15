@@ -18,28 +18,64 @@ namespace PharmacyManagement_WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllSuppliers()
         {
-            var suppliers = await _supplierServices.GetAllSuppliers();
-            return Ok(suppliers);
+            try
+            {
+                var suppliers = await _supplierServices.GetAllSuppliers();
+                return Ok(suppliers);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         [HttpPost("")]
         public async Task<IActionResult> AddSupplier([FromBody] Supplier supplier)
         {
-            var id = await _supplierServices.AddSupplier(supplier);
-            return CreatedAtAction(nameof(AddSupplier), id);
+            try
+            {
+                var id = await _supplierServices.AddSupplier(supplier);
+                return CreatedAtAction(nameof(AddSupplier), id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSupplier([FromBody] Supplier supplier, [FromRoute] int id)
         {
-            await _supplierServices.UpdateSupplier(id, supplier);
-            return Ok();
+            try
+            {
+                if (id != supplier.SupplierId)
+                {
+                    return BadRequest();
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+                await _supplierServices.UpdateSupplier(id, supplier);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSupplier([FromRoute] int id)
         {
-            await _supplierServices.DeleteSupplier(id);
-            return Ok();
+            try
+            {
+                await _supplierServices.DeleteSupplier(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

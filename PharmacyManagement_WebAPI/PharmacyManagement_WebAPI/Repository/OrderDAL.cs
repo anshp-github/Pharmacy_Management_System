@@ -21,8 +21,7 @@ namespace PharmacyManagement_WebAPI.Repository
                 Amount = o.Amount,
                 Count = o.Count,
                 IsPickedUp = o.IsPickedUp,
-                Admin = o.Admin,
-                AdminId = o.AdminId,
+               
                 Doctor = o.Doctor,
                 DoctorId = o.DoctorId,
                 Medicine = o.Medicine,
@@ -34,8 +33,8 @@ namespace PharmacyManagement_WebAPI.Repository
         }
         public async Task<List<Order>> GetOrdersReport(DateTime From,DateTime To)
         {
-            
-            var records = await _context.Orders.Where(o => o.OrderDate > From && o.OrderDate < To)
+             
+            var records = await _context.Orders.Where(o => o.OrderDate >= From && o.OrderDate <= To)
                 .Select(o => new Order()
             {
                 OrderDate = o.OrderDate,
@@ -43,8 +42,7 @@ namespace PharmacyManagement_WebAPI.Repository
                 Amount = o.Amount,
                 Count = o.Count,
                 IsPickedUp = o.IsPickedUp,
-                Admin = o.Admin,
-                AdminId = o.AdminId,
+               
                 Doctor = o.Doctor,
                 DoctorId = o.DoctorId,
                 Medicine = o.Medicine,
@@ -63,10 +61,9 @@ namespace PharmacyManagement_WebAPI.Repository
                 OrderDate = order.OrderDate,
                 Amount = order.Amount,
                 Count = order.Count,
-                // Admin = order.Admin,
-                AdminId = order.AdminId,
+               
                 // Doctor= order.Doctor,
-                DoctorId = order.DoctorId,
+                DoctorId = 1,
                 MedicineId = order.MedicineId,
 
 

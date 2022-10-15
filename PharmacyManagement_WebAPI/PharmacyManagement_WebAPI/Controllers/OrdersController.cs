@@ -20,20 +20,41 @@ namespace PharmacyManagement_WebAPI.Controllers
         [HttpGet("")]
         public async Task<IActionResult> GetAllOrders()
         {
-            var orders = await _orderServices.GetAllOrders();
-            return Ok(orders);
+            try
+            {
+                var orders = await _orderServices.GetAllOrders();
+                return Ok(orders);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         [HttpPost("")]
         public async Task<IActionResult> AddOrder([FromBody] Order order)
         {
-            var id = await _orderServices.AddOrder(order);
-            return CreatedAtAction(nameof(AddOrder), id);
+            try
+            {
+                var id = await _orderServices.AddOrder(order);
+                return CreatedAtAction(nameof(AddOrder), id);
+            }
+            catch(Exception) 
+            {
+                throw;
+            }
         }
-        [HttpGet("{From}/{To}")]
-        public async Task<IActionResult> GetOrdersReport([FromRoute] DateTime From, DateTime To)
+        [HttpGet("From/{From}/To/{To}")]
+        public async Task<IActionResult> GetOrdersReport([FromRoute] DateTime From,[FromRoute] DateTime To)
         {
-            var orders= await _orderServices.GetOrdersReport(From, To);
-            return Ok(orders);
+            try
+            {
+                var orders = await _orderServices.GetOrdersReport(From, To);
+                return Ok(orders);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

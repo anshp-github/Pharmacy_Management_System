@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using PharmacyManagement_WebAPI.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace PharmacyManagement_WebAPI.Models
@@ -15,13 +16,13 @@ namespace PharmacyManagement_WebAPI.Models
         public int Amount { get; set; }
         public int Count { get; set; }
         public int DoctorId { get; set; }
-        public int AdminId { get; set; }
+       // public int AdminId { get; set; }
         public int MedicineId { get; set; }
 
         [ValidateNever]
         public DoctorRegistration Doctor { get; set; }
-        [ValidateNever]
-        public Admin Admin { get; set; }
+       // [ValidateNever]
+       // public Admin Admin { get; set; }
         [ValidateNever]
         public Medicine Medicine { get; set; }
     }

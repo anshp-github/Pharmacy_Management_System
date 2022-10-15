@@ -18,6 +18,7 @@ namespace PharmacyManagement_WebAPI.Repository
                 SupplierId = x.SupplierId,
                 SupplierName = x.SupplierName,
                 SupplierEmail = x.SupplierEmail,
+                SupplierPhnNum=x.SupplierPhnNum,
                 MedicineId = x.MedicineId,
                 Medicine = x.Medicine,
 
@@ -33,6 +34,7 @@ namespace PharmacyManagement_WebAPI.Repository
                 SupplierId = supplier.SupplierId,
                 SupplierName = supplier.SupplierName,
                 SupplierEmail = supplier.SupplierEmail,
+                SupplierPhnNum=supplier.SupplierPhnNum,
                 MedicineId = supplier.MedicineId,
 
 
@@ -51,6 +53,7 @@ namespace PharmacyManagement_WebAPI.Repository
                 x.SupplierId = supplier.SupplierId;
                 x.SupplierName = supplier.SupplierName;
                 x.SupplierEmail = supplier.SupplierEmail;
+                x.SupplierPhnNum = supplier.SupplierPhnNum;
                 x.MedicineId = supplier.MedicineId;
 
             };

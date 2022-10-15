@@ -16,9 +16,9 @@ namespace PharmacyManagement_WebAPI.Services
         {
           return await _doctor.GetAllDoctors();
         }
-        public async Task<DoctorRegistration> GetDoctorByName(string DocName)
+        public async Task<DoctorRegistration> GetDoctorByName(string DocEmail)
         {
-            return await _doctor.GetDoctorByName(DocName);
+            return await _doctor.GetDoctorByName(DocEmail);
 
         }
         public async Task<int> AddDoctor(DoctorRegistration doctor)

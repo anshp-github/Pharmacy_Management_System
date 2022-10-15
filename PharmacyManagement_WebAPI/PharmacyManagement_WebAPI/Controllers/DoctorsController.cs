@@ -20,27 +20,67 @@ namespace PharmacyManagement_WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllDoctors()
         {
-            var doctors = await _doctorServices.GetAllDoctors();
-            return Ok(doctors);
+            try
+            {
+                var doctors = await _doctorServices.GetAllDoctors();
+                return Ok(doctors);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
-        [HttpGet("{DocName}")]
-        public async Task<IActionResult> GetDoctor([FromRoute] string DocName)
+        [HttpGet("{DocEmail}")]
+        public async Task<IActionResult> GetDoctor([FromRoute] string DocEmail)
         {
-            var doctor = await _doctorServices.GetDoctorByName(DocName);
-            return Ok(doctor);
+            try
+            {
+                var doctor = await _doctorServices.GetDoctorByName(DocEmail);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(doctor);
+                }
+
+                if (doctor == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(doctor);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         [HttpPost("")]
         public async Task<IActionResult> AddDoctor([FromBody] DoctorRegistration doctor)
         {
-            var id = await _doctorServices.AddDoctor(doctor);
-            return CreatedAtAction(nameof(AddDoctor), id);
+            try
+            {
+                var id = await _doctorServices.AddDoctor(doctor);
+                return CreatedAtAction(nameof(AddDoctor), id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDoctor([FromRoute] int id)
         {
-            await _doctorServices.DeleteDoctor(id);
-            return Ok();
+            try
+            {
+                await _doctorServices.DeleteDoctor(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
