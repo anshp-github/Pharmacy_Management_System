@@ -38,17 +38,52 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var id = await _orderServices.AddOrder(order);
                 return CreatedAtAction(nameof(AddOrder), id);
             }
-            catch(Exception) 
+            catch (Exception)
             {
                 throw;
             }
         }
         [HttpGet("From/{From}/To/{To}")]
-        public async Task<IActionResult> GetOrdersReport([FromRoute] DateTime From,[FromRoute] DateTime To)
+        public async Task<IActionResult> GetOrdersReport([FromRoute] DateTime From, [FromRoute] DateTime To)
         {
             try
             {
                 var orders = await _orderServices.GetOrdersReport(From, To);
+                return Ok(orders);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateOrder([FromBody] Order order, [FromRoute] int id)
+        {
+            try
+            {
+                if (id != order.OrderId)
+                {
+                    return BadRequest();
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+                await _orderServices.UpdateOrder(id, order);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpGet("confirmation")]
+        public async Task<IActionResult> GetOrdersConfirmation()
+        {
+            try
+            {
+                var orders = await _orderServices.GetOrdersConfirmation();
                 return Ok(orders);
             }
             catch (Exception)

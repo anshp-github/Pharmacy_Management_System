@@ -74,5 +74,42 @@ namespace PharmacyManagement_WebAPI.Repository
             return record.OrderId;
 
         }
+        public async Task UpdateOrder(int id, Order order)
+        {
+            var ord = await _context.Orders.FindAsync(id);
+            if (ord != null)
+            {
+                ord.IsPickedUp = true;
+                //ord.OrderDate = order.OrderDate;
+                //ord.Amount = order.Amount;
+                //ord.Count = order.Count;
+                //ord.DoctorId = 1;
+                //ord.OrderId = id;
+
+            };
+
+            await _context.SaveChangesAsync();
+
+        }
+        public async Task<List<Order>> GetOrdersConfirmation()
+        {
+            var records = await _context.Orders.Where(o => o.IsPickedUp==true)
+                .Select(o => new Order()
+                {
+                OrderDate = o.OrderDate,
+                OrderId = o.OrderId,
+                Amount = o.Amount,
+                Count = o.Count,
+                IsPickedUp = o.IsPickedUp,
+
+                Doctor = o.Doctor,
+                DoctorId = o.DoctorId,
+                Medicine = o.Medicine,
+                MedicineId = o.MedicineId,
+            }).ToListAsync();
+
+            return records;
+        }
+
     }
 }

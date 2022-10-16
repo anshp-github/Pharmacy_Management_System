@@ -23,5 +23,13 @@ namespace PharmacyManagement_WebAPI.Services
         {
             return await _order.GetOrdersReport(From, To);
         }
+        public async Task UpdateOrder(int id, Order order)
+        {
+           await _order.UpdateOrder( id, order);
+        }
+        public async Task<List<Order>> GetOrdersConfirmation()
+        {
+            return await _order.GetOrdersConfirmation();
+        }
     }
 }
