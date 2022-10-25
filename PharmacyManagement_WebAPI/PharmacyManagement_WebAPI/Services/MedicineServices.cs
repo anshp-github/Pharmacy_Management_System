@@ -9,27 +9,79 @@ namespace PharmacyManagement_WebAPI.Services
         IMedicineRepository _medicine;
         public MedicineServices(IMedicineRepository medicine)
         {
-            _medicine = medicine;
+            try
+            {
+                _medicine = medicine;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+        #region Get medicine list
         public async Task<List<Medicine>> GetAllMedicines()
         {
-            return await _medicine.GetAllMedicines();
+            try
+            {
+                return await _medicine.GetAllMedicines();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+        #endregion
+        #region Get medicine by name
         public async Task<Medicine> GetMedicineByName(string MedName)
         {
-            return await _medicine.GetMedicineByName(MedName);
+            try
+            {
+                return await _medicine.GetMedicineByName(MedName);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+        #endregion
+        #region Insert Medicine
         public async Task<int> AddMedicine(Medicine medicine)
         {
-           return await _medicine.AddMedicine(medicine);
+            try
+            {
+                return await _medicine.AddMedicine(medicine);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+        #endregion
+        #region Update medicine
         public async Task UpdateMedicine(int id, Medicine medicine)
         {
-            await _medicine.UpdateMedicine(id, medicine);
+            try
+            {
+                await _medicine.UpdateMedicine(id, medicine);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+        #endregion
+        #region Delete Medicine
         public async Task DeleteMedicine(int id)
         {
-            await _medicine.DeleteMedicine(id);
+            try
+            {
+                await _medicine.DeleteMedicine(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+        #endregion
     }
 }

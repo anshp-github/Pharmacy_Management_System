@@ -11,105 +11,152 @@ namespace PharmacyManagement_WebAPI.Repository
         {
             _context = context;
         }
-
+        #region Get order list
         public async Task<List<Order>> GetAllOrders()
         {
-            var records = await _context.Orders.Select(o => new Order()
+            try
             {
-                OrderDate = o.OrderDate,
-                OrderId = o.OrderId,
-                Amount = o.Amount,
-                Count = o.Count,
-                IsPickedUp = o.IsPickedUp,
-               
-                Doctor = o.Doctor,
-                DoctorId = o.DoctorId,
-                Medicine = o.Medicine,
-                MedicineId = o.MedicineId,
-            }).ToListAsync();
+                var records = await _context.Orders.Select(o => new Order()
+                {
+                    OrderDate = o.OrderDate,
+                    OrderId = o.OrderId,
+                    Amount = o.Amount,
+                    Count = o.Count,
+                    IsPickedUp = o.IsPickedUp,
 
-            return records;
+                    Doctor = o.Doctor,
+                    DoctorId = o.DoctorId,
+                    Medicine = o.Medicine,
+                    MedicineId = o.MedicineId,
+                }).ToListAsync();
+
+                return records;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
+        #endregion
+        #region Get order between the date range given
         public async Task<List<Order>> GetOrdersReport(DateTime From,DateTime To)
         {
-             
-            var records = await _context.Orders.Where(o => o.OrderDate >= From && o.OrderDate <= To)
-                .Select(o => new Order()
+            try
             {
-                OrderDate = o.OrderDate,
-                OrderId = o.OrderId,
-                Amount = o.Amount,
-                Count = o.Count,
-                IsPickedUp = o.IsPickedUp,
-               
-                Doctor = o.Doctor,
-                DoctorId = o.DoctorId,
-                Medicine = o.Medicine,
-                MedicineId = o.MedicineId,
 
-            }).ToListAsync();
-            return records;
-           
+                var records = await _context.Orders.Where(o => o.OrderDate >= From && o.OrderDate <= To)
+                    .Select(o => new Order()
+                    {
+                        OrderDate = o.OrderDate,
+                        OrderId = o.OrderId,
+                        Amount = o.Amount,
+                        Count = o.Count,
+                        IsPickedUp = o.IsPickedUp,
+
+                        Doctor = o.Doctor,
+                        DoctorId = o.DoctorId,
+                        Medicine = o.Medicine,
+                        MedicineId = o.MedicineId,
+
+                    }).ToListAsync();
+                return records;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
+        #endregion
+        #region Insert order
         public async Task<int> AddOrder(Order order)
         {
-
-            var record = new Order()
+            try
             {
-                OrderId = order.OrderId,
-                OrderDate = order.OrderDate,
-                Amount = order.Amount,
-                Count = order.Count,
-               
-                // Doctor= order.Doctor,
-                DoctorId = 1,
-                MedicineId = order.MedicineId,
+
+                var record = new Order()
+                {
+                    OrderId = order.OrderId,
+                    OrderDate = order.OrderDate,
+                    Amount = order.Amount,
+                    Count = order.Count,
+
+                    // Doctor= order.Doctor,
+                    DoctorId = 1,
+                    MedicineId = order.MedicineId,
 
 
-            };
 
-            _context.Orders.Add(record);
-            await _context.SaveChangesAsync();
-            return record.OrderId;
+                };
+
+                _context.Orders.Add(record);
+                await _context.SaveChangesAsync();
+                return record.OrderId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
 
         }
+        #endregion
+        #region Update order
         public async Task UpdateOrder(int id, Order order)
         {
-            var ord = await _context.Orders.FindAsync(id);
-            if (ord != null)
+            try
             {
-                ord.IsPickedUp = true;
-                //ord.OrderDate = order.OrderDate;
-                //ord.Amount = order.Amount;
-                //ord.Count = order.Count;
-                //ord.DoctorId = 1;
-                //ord.OrderId = id;
+                var ord = await _context.Orders.FindAsync(id);
+                if (ord != null)
+                {
+                    ord.IsPickedUp = true;
+                    //ord.OrderDate = order.OrderDate;
+                    //ord.Amount = order.Amount;
+                    //ord.Count = order.Count;
+                    //ord.DoctorId = 1;
+                    //ord.OrderId = id;
 
-            };
+                };
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
+        #endregion
+        #region Get order confirmation
         public async Task<List<Order>> GetOrdersConfirmation()
         {
-            var records = await _context.Orders.Where(o => o.IsPickedUp==true)
-                .Select(o => new Order()
-                {
-                OrderDate = o.OrderDate,
-                OrderId = o.OrderId,
-                Amount = o.Amount,
-                Count = o.Count,
-                IsPickedUp = o.IsPickedUp,
+            try
+            {
+                var records = await _context.Orders.Where(o => o.IsPickedUp == true)
+                    .Select(o => new Order()
+                    {
+                        OrderDate = o.OrderDate,
+                        OrderId = o.OrderId,
+                        Amount = o.Amount,
+                        Count = o.Count,
+                        IsPickedUp = o.IsPickedUp,
 
-                Doctor = o.Doctor,
-                DoctorId = o.DoctorId,
-                Medicine = o.Medicine,
-                MedicineId = o.MedicineId,
-            }).ToListAsync();
+                        Doctor = o.Doctor,
+                        DoctorId = o.DoctorId,
+                        Medicine = o.Medicine,
+                        MedicineId = o.MedicineId,
+                    }).ToListAsync();
 
-            return records;
+                return records;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+        #endregion
 
     }
 }

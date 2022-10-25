@@ -17,6 +17,7 @@ namespace PharmacyManagement_WebAPI.Controllers
         {
             _doctorServices = doctorServices;
         }
+        #region Get doctor list
         [HttpGet]
         public async Task<IActionResult> GetAllDoctors()
         {
@@ -25,11 +26,13 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var doctors = await _doctorServices.GetAllDoctors();
                 return Ok(doctors);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
+        #region Get doctor by email
         [HttpGet("{DocEmail}")]
         public async Task<IActionResult> GetDoctor([FromRoute] string DocEmail)
         {
@@ -50,11 +53,13 @@ namespace PharmacyManagement_WebAPI.Controllers
                     return Ok(doctor);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
+        #region Insert doctor
         [HttpPost("")]
         public async Task<IActionResult> AddDoctor([FromBody] DoctorRegistration doctor)
         {
@@ -63,12 +68,14 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var id = await _doctorServices.AddDoctor(doctor);
                 return CreatedAtAction(nameof(AddDoctor), id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }
+        #endregion
+        #region Delete doctor
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDoctor([FromRoute] int id)
         {
@@ -77,10 +84,11 @@ namespace PharmacyManagement_WebAPI.Controllers
                 await _doctorServices.DeleteDoctor(id);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
     }
 }

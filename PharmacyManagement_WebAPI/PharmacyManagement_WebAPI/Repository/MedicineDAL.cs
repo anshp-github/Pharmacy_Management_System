@@ -12,7 +12,10 @@ namespace PharmacyManagement_WebAPI.Repository
             {
                 _context = context;
             }
-            public async Task<List<Medicine>> GetAllMedicines()
+        #region Get medicine list
+        public async Task<List<Medicine>> GetAllMedicines()
+            {
+            try
             {
                 var records = await _context.Medicines.Select(x => new Medicine()
                 {
@@ -26,7 +29,16 @@ namespace PharmacyManagement_WebAPI.Repository
                 }).ToListAsync();
                 return records;
             }
-            public async Task<Medicine> GetMedicineByName(string MedName)
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+        #region Get medicine by name
+        public async Task<Medicine> GetMedicineByName(string MedName)
+            {
+            try
             {
                 var records = await _context.Medicines.Where(x => x.MedName == MedName).Select(x => new Medicine()
                 {
@@ -39,9 +51,18 @@ namespace PharmacyManagement_WebAPI.Repository
 
                 }).FirstOrDefaultAsync();
                 return records;
-
             }
-            public async Task<int> AddMedicine(Medicine medicine)
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
+        #region Insert medicine
+        public async Task<int> AddMedicine(Medicine medicine)
+            {
+            try
             {
                 var med = new Medicine()
                 {
@@ -56,10 +77,18 @@ namespace PharmacyManagement_WebAPI.Repository
                 _context.Medicines.AddAsync(med);
                 await _context.SaveChangesAsync();
                 return med.MedicineId;
-
-
             }
-            public async Task UpdateMedicine(int id, Medicine medicine)
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
+        #region Update medicine
+        public async Task UpdateMedicine(int id, Medicine medicine)
+            {
+            try
             {
                 var med = await _context.Medicines.FindAsync(id);
                 if (med != null)
@@ -72,25 +101,40 @@ namespace PharmacyManagement_WebAPI.Repository
                 };
 
                 await _context.SaveChangesAsync();
-
             }
-            //public async Task UpdateMedicineByStock(int id, JsonPatchDocument medicine)
-            //{
-            //    var med = await _context.Medicines.FindAsync(id);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
-            //    if (med != null)
-            //    {
-            //        medicine.ApplyTo(med);
-            //        await _context.SaveChangesAsync();
+        }
+        #endregion
+        //public async Task UpdateMedicineByStock(int id, JsonPatchDocument medicine)
+        //{
+        //    var med = await _context.Medicines.FindAsync(id);
 
-            //    }
+        //    if (med != null)
+        //    {
+        //        medicine.ApplyTo(med);
+        //        await _context.SaveChangesAsync();
 
-            //}
-            public async Task DeleteMedicine(int id)
+        //    }
+
+        //}
+        #region Delete Medicine
+        public async Task DeleteMedicine(int id)
+            {
+            try
             {
                 var med = new Medicine() { MedicineId = id };
                 _context.Medicines.Remove(med);
                 await _context.SaveChangesAsync();
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+        #endregion
+    }
 }

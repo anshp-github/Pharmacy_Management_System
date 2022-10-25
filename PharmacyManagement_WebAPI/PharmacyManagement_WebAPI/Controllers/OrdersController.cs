@@ -16,7 +16,7 @@ namespace PharmacyManagement_WebAPI.Controllers
         {
             _orderServices = orderServices;
         }
-
+        #region Get Order list
         [HttpGet("")]
         public async Task<IActionResult> GetAllOrders()
         {
@@ -25,11 +25,14 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var orders = await _orderServices.GetAllOrders();
                 return Ok(orders);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
+        #region Insert order
+      
         [HttpPost("")]
         public async Task<IActionResult> AddOrder([FromBody] Order order)
         {
@@ -38,11 +41,13 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var id = await _orderServices.AddOrder(order);
                 return CreatedAtAction(nameof(AddOrder), id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
+        #region Get order between date range 
         [HttpGet("From/{From}/To/{To}")]
         public async Task<IActionResult> GetOrdersReport([FromRoute] DateTime From, [FromRoute] DateTime To)
         {
@@ -51,11 +56,13 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var orders = await _orderServices.GetOrdersReport(From, To);
                 return Ok(orders);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
+        #region Update order
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOrder([FromBody] Order order, [FromRoute] int id)
         {
@@ -73,11 +80,13 @@ namespace PharmacyManagement_WebAPI.Controllers
 
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
+        #region Get order confirmation
         [HttpGet("confirmation")]
         public async Task<IActionResult> GetOrdersConfirmation()
         {
@@ -86,10 +95,11 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var orders = await _orderServices.GetOrdersConfirmation();
                 return Ok(orders);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
     }
 }

@@ -17,6 +17,7 @@ namespace PharmacyManagement_WebAPI.Controllers
         {
             _medicineServices = medicineServices;
         }
+        #region Get medicine list
         [HttpGet]
         public async Task<IActionResult> GetAllMedicines()
         {
@@ -25,11 +26,13 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var medicines = await _medicineServices.GetAllMedicines();
                 return Ok(medicines);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
+        #region Get medicine by name
         [HttpGet("{MedName}")]
         public async Task<IActionResult> GetMedicine([FromRoute] string MedName)
         {
@@ -50,12 +53,13 @@ namespace PharmacyManagement_WebAPI.Controllers
                     return Ok(medcine);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
-
+        #endregion
+        #region Insert medicine
         [HttpPost("")]
         public async Task<IActionResult> AddMedicine([FromBody] Medicine medicine)
         {
@@ -64,12 +68,14 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var id = await _medicineServices.AddMedicine(medicine);
                 return CreatedAtAction(nameof(AddMedicine), id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }
+        #endregion
+        #region Update medicine
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMedicine([FromBody] Medicine medicine, [FromRoute] int id)
         {
@@ -86,12 +92,13 @@ namespace PharmacyManagement_WebAPI.Controllers
                 await _medicineServices.UpdateMedicine(id, medicine);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }
+        #endregion
         //[HttpPatch("{id}")]
         //public async Task<IActionResult> UpdateMedicineByStock([FromBody] JsonPatchDocument medicine, [FromRoute] int id)
         //{
@@ -99,6 +106,7 @@ namespace PharmacyManagement_WebAPI.Controllers
         //    return Ok();
 
         //}
+        #region Delete medicine
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedicine([FromRoute] int id)
         {
@@ -107,10 +115,11 @@ namespace PharmacyManagement_WebAPI.Controllers
                 await _medicineServices.DeleteMedicine(id);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
     }
 }

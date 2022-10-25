@@ -15,6 +15,7 @@ namespace PharmacyManagement_WebAPI.Controllers
         {
             _supplierServices = supplierServices;
         }
+        #region Get supplier list
         [HttpGet]
         public async Task<IActionResult> GetAllSuppliers()
         {
@@ -23,11 +24,13 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var suppliers = await _supplierServices.GetAllSuppliers();
                 return Ok(suppliers);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
+        #region Insert supplier
         [HttpPost("")]
         public async Task<IActionResult> AddSupplier([FromBody] Supplier supplier)
         {
@@ -36,12 +39,14 @@ namespace PharmacyManagement_WebAPI.Controllers
                 var id = await _supplierServices.AddSupplier(supplier);
                 return CreatedAtAction(nameof(AddSupplier), id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }
+        #endregion
+        #region Update supplier
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSupplier([FromBody] Supplier supplier, [FromRoute] int id)
         {
@@ -58,12 +63,14 @@ namespace PharmacyManagement_WebAPI.Controllers
                 await _supplierServices.UpdateSupplier(id, supplier);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
         }
+        #endregion
+        #region Delete Supplier
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSupplier([FromRoute] int id)
         {
@@ -72,10 +79,11 @@ namespace PharmacyManagement_WebAPI.Controllers
                 await _supplierServices.DeleteSupplier(id);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+        #endregion
     }
 }
